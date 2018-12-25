@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
@@ -7,16 +8,20 @@ const postsRoutes = require('./routes/posts');
 
 const app = express();
 
-mongoose.connect("mongodb+srv://yansiu:PqqAnunBH7q34Yi@cluster0-xpqsp.mongodb.net/node-angular?retryWrites=true")
+mongoose
+  .connect(
+    "mongodb+srv://yansiu:XRq5yfhPtmhfZ70u@cluster0-xpqsp.mongodb.net/node-angular?retryWrites=true"
+  )
   .then(() => {
-    console.log('Connected to database.');
+    console.log("Connected to database.");
   })
   .catch(() => {
-    console.log('Connection failed.');
-  })
+    console.log("Connection failed.");
+  });
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false}))
+app.use(bodyParser.urlencoded({ extended: false}));
+app.use('/images', express.static(path.join('backend/images')));
 
 // Cors
 app.use((req, res, next) => {
