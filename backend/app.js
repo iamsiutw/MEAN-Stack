@@ -1,16 +1,18 @@
-const path = require('path')
+const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const postsRoutes = require('./routes/posts');
-const userRoutes = require('./routes/user');
+const postsRoutes = require("./routes/posts");
+const userRoutes = require("./routes/user");
 
 const app = express();
 
 mongoose
   .connect(
-    "mongodb+srv://yansiu:XRq5yfhPtmhfZ70u@cluster0-xpqsp.mongodb.net/node-angular"
+    "mongodb+srv://yansiu:" +
+      process.env.MONGO_ATLAS_PW +
+      "@cluster0-xpqsp.mongodb.net/node-angular"
   )
   .then(() => {
     console.log("Connected to database.");
@@ -20,8 +22,8 @@ mongoose
   });
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false}));
-app.use('/images', express.static(path.join('backend/images')));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use("/images", express.static(path.join("backend/images")));
 
 // Cors
 app.use((req, res, next) => {
